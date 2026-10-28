@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>هدية صغيرة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#ff4d8d;--rose:#ff2d55;--gold:#f5c76b;--glass:rgba(255,255,255,.07);--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{font-family:Cairo,Tahoma,sans-serif;color:#fff;min-height:100vh;line-height:1.8;overflow-x:hidden;background:linear-gradient(160deg,#07040b 0%,#2a0a1f 38%,#2b1250 72%,#4a1236 100%) fixed}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+h1,h2,.disp{font-family:'Aref Ruqaa',Amiri,serif;font-weight:700}
+#intro{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;padding:24px;background:rgba(7,4,11,.6);backdrop-filter:blur(4px);transition:opacity .9s}
+#intro.out{opacity:0;pointer-events:none}
+#intro p{font-size:clamp(1.3rem,5vw,2rem);max-width:520px;line-height:1.9}
+.bigheart{width:130px;filter:drop-shadow(0 0 18px #ff2d55) drop-shadow(0 0 44px #ff4d8d);animation:beat 1.4s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.12)}30%{transform:scale(1)}45%{transform:scale(1.07)}}
+.btn{font:600 1rem Cairo,sans-serif;color:#fff;border:0;border-radius:99px;padding:.65em 1.6em;cursor:pointer;background:linear-gradient(135deg,var(--rose),#c2185b 55%,#8e24aa);box-shadow:0 0 22px rgba(255,45,85,.45);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(255,77,141,.7)}
+.btn:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.btn.ghost{background:var(--glass);border:1px solid var(--line);box-shadow:none}
+main{position:relative;z-index:1}
+main.show{animation:fade 1.6s both}
+@keyframes fade{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+section{max-width:900px;margin:0 auto;padding:64px 18px 24px}
+section>h2{font-size:clamp(1.8rem,6vw,2.6rem);text-align:center;margin-bottom:26px;text-shadow:0 0 18px rgba(255,77,141,.7)}
+.hero{text-align:center;padding-top:48px}
+.hero h1{font-size:clamp(2.2rem,9vw,4.2rem);color:#ffe3ee;text-shadow:0 0 14px #ff4d8d,0 0 40px #ff2d55}
+.hero p{color:var(--gold);font-size:1.15rem}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:22px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.35)}
+.ctr{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+/* القلب */
+.hw{position:relative;width:min(100%,540px);margin:0 auto;animation:beat 1.8s infinite;transform-origin:50% 45%}
+.hw.paused{animation-play-state:paused}
+#hc{display:block;width:100%}
+#nm{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:54%;text-align:center;font-family:'Aref Ruqaa',serif;font-weight:700;font-size:clamp(1.5rem,8vw,3rem);line-height:1.2;color:#fff;text-shadow:0 0 10px #fff,0 0 22px var(--pink),0 0 46px var(--rose),0 0 70px var(--rose);word-break:break-word}
+/* رسالة */
+#msg{min-height:9em;font-size:1.2rem;white-space:pre-line;line-height:2.1}
+#msg.typing::after{content:"▍";color:var(--pink);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+/* ليه إنتِ مميزة */
+.rs{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.rs svg{width:34px;filter:drop-shadow(0 0 8px var(--rose))}
+.rs h3{font:700 1.5rem 'Aref Ruqaa',serif;color:#ffd6e5}
+/* كرسي الاعتراف والتحديات */
+.qcard{min-height:9em;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;padding:24px;border-radius:20px;font:700 clamp(1.3rem,5vw,1.8rem)/1.9 'Aref Ruqaa',Cairo,serif;background:radial-gradient(circle at 50% 0,rgba(255,45,85,.22),transparent 70%),var(--glass);border:1px solid var(--line);box-shadow:0 0 30px rgba(255,45,85,.2)}
+.qcard.sw{animation:fade .6s both}
+#cfn,#tq{margin-top:12px;text-align:center;color:var(--gold);min-height:1.8em}
+#fav ul,.pls{list-style:none;padding:0}
+#fav li{display:flex;gap:8px;margin:6px 0}
+#fav li .q{flex:1;text-align:right;font:600 .95rem Cairo,sans-serif;color:#fff;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:.5em .9em;cursor:pointer}
+#fav li .x{border:0;background:none;color:var(--pink);font-size:1.2rem;cursor:pointer}
+/* ألعاب */
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
+.tabs .btn{box-shadow:none}
+.tabs .btn[aria-selected=true]{background:linear-gradient(135deg,var(--rose),#8e24aa)}
+.opt{display:block;width:100%;margin:8px 0;text-align:right;font:600 1rem Cairo,sans-serif;color:#fff;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:.7em 1em;cursor:pointer}
+.opt:hover{border-color:var(--pink)}
+.opt.ok{background:rgba(76,175,80,.35)}.opt.no{background:rgba(244,67,54,.35)}
+.bar{display:flex;justify-content:space-between;color:var(--gold);font-weight:700;margin-bottom:10px}
+#ga{position:relative;height:290px;border:1px dashed var(--line);border-radius:18px;overflow:hidden;touch-action:manipulation}
+.fh{position:absolute;border:0;background:none;color:var(--rose);cursor:pointer;text-shadow:0 0 12px var(--pink);animation:pop .3s}
+@keyframes pop{from{transform:scale(0)}}
+.res{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:20px;font-size:1.2rem;background:rgba(7,4,11,.6)}
+.env{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.env button{aspect-ratio:1;font-size:2.4rem;border-radius:18px;border:1px solid var(--line);background:var(--glass);cursor:pointer;color:#fff;transition:transform .2s}
+.env button:hover{transform:scale(1.06)}
+.env button.open{background:linear-gradient(135deg,#c2185b,#8e24aa)}
+#sm{margin-top:14px;min-height:3.6em;text-align:center;font-size:1.15rem;color:#ffe3ee}
+/* موسيقى */
+.pl{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+#cov{width:96px;height:96px;border-radius:18px;display:grid;place-items:center;background:linear-gradient(135deg,#c2185b,#6a1b9a);flex:none;box-shadow:0 0 22px rgba(255,45,85,.5)}
+#cov svg{width:52px;filter:drop-shadow(0 0 10px #fff)}
+#cov.on svg{animation:beat .9s infinite}
+.eq{display:flex;gap:3px;align-items:flex-end;justify-content:center;height:56px;margin-top:16px}
+.eq span{width:5px;height:100%;border-radius:3px;background:linear-gradient(var(--gold),var(--rose));transform:scaleY(.12);transform-origin:bottom;animation:eqb 1s ease-in-out infinite alternate;animation-play-state:paused}
+.eq.on span{animation-play-state:running}
+@keyframes eqb{to{transform:scaleY(1)}}
+.pls{margin-top:14px;display:grid;gap:6px;max-height:340px;overflow:auto}
+.pls button{width:100%;text-align:right;font:600 .95rem Cairo,sans-serif;color:#fff;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:.55em .9em;cursor:pointer}
+.pls li.on button{border-color:var(--pink);background:rgba(255,45,85,.25)}
+.pl .in{flex:1;min-width:200px}
+#st{font:700 1.3rem 'Aref Ruqaa',serif}#sa{color:var(--gold)}
+input[type=range]{width:100%;accent-color:var(--pink);direction:ltr}
+.row{display:flex;align-items:center;gap:10px;margin-top:8px}
+.row .btn{padding:.4em 1em}
+#sn{color:#ffb4c8;font-size:.95rem;min-height:1.6em;margin-top:8px}
+/* عداد */
+.cnt{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
+.cnt div{padding:16px 4px}
+.cnt b{display:block;font-size:clamp(1.6rem,7vw,2.8rem);color:#fff;text-shadow:0 0 16px var(--pink)}
+/* مفاجأة */
+#sp{text-align:center;margin-top:22px}
+#sp .heart{width:110px;filter:drop-shadow(0 0 20px var(--rose));animation:beat 1.4s infinite}
+#sp p{font-size:1.3rem;margin-top:12px;white-space:pre-line}
+.fl{position:fixed;bottom:-40px;z-index:30;pointer-events:none;animation:up 3.2s ease-out forwards}
+@keyframes up{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+footer{text-align:center;padding:40px 18px 60px}
+@media(max-width:520px){.cnt{grid-template-columns:repeat(2,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<div id="intro">
+  <svg class="bigheart" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7aa8"/><stop offset="1" stop-color="#e0103f"/></linearGradient></defs><path fill="url(#g)" d="M12 21.5C5 16.5 2 12.6 2 8.8 2 6 4.2 4 6.8 4c1.9 0 3.6 1 5.2 3 1.6-2 3.3-3 5.2-3C19.8 4 22 6 22 8.8c0 3.8-3 7.7-10 12.7z"/></svg>
+  <p id="introTxt"></p>
+  <button class="btn" id="openBtn">افتحي هديتك</button>
+</div>
+
+<main id="main" hidden>
+  <header class="hero section-like"><h1 id="title"></h1><p id="sub"></p></header>
+
+  <section id="heartSec" aria-label="قلب الكلمات">
+    <div class="hw" id="hw"><canvas id="hc" role="img" aria-label="قلب مكوّن من كلمات الحب بلغات العالم"></canvas><div id="nm"></div></div>
+    <div class="ctr"><button class="btn ghost" id="spd">السرعة: متوسطة</button><button class="btn ghost" id="stp">إيقاف الحركة</button></div>
+  </section>
+
+  <section><h2>رسالة من قلبي</h2>
+    <div class="card"><p id="msg"></p>
+      <div class="ctr"><button class="btn" id="full">عرض الرسالة كاملة</button><button class="btn ghost" id="again">إعادة الأنيميشن</button></div></div>
+  </section>
+
+  <section><h2>ليه إنتِ مميزة؟</h2><div class="rs" id="rs"></div></section>
+
+  <section><h2>كرسي الاعتراف ❤️‍🔥</h2>
+    <div class="card">
+      <div class="bar"><span id="cc"></span></div>
+      <div class="qcard" id="cq">اضغطي «السؤال التالي» وابدأي ❤️</div>
+      <div id="cfn"></div>
+      <div class="ctr"><button class="btn" id="cfa">جاوب بصراحة ❤️</button><button class="btn" id="cfx">السؤال التالي</button><button class="btn ghost" id="cfr">اختاري سؤالًا عشوائيًا</button><button class="btn ghost" id="cfs">تخطي السؤال</button><button class="btn ghost" id="cfb">☆ أضيفه للمفضلة</button><button class="btn ghost" id="cft">دورك تسألني</button></div>
+      <div id="tq"></div>
+      <div id="fav" hidden><h3 class="disp" style="font-size:1.5rem;margin-top:14px">أسئلتنا المفضلة</h3><ul id="fl"></ul></div>
+    </div>
+  </section>
+
+  <section><h2>اختار تحديك 💘</h2>
+    <div class="card"><div class="qcard" id="chq">اضغط على الزرار واختار تحديك 🎲</div>
+      <div class="ctr"><button class="btn" id="chb">اختار تحدي عشوائي 🎲</button><button class="btn ghost" id="chs">تخطي التحدي</button></div></div>
+  </section>
+
+  <section><h2>ألعاب الحب</h2>
+    <div class="card">
+      <div class="tabs" role="tablist">
+        <button class="btn" role="tab" data-t="0" aria-selected="true">اختبار الحب</button>
+        <button class="btn" role="tab" data-t="1" aria-selected="false">اجمعي القلوب</button>
+        <button class="btn" role="tab" data-t="2" aria-selected="false">الرسائل السرية</button>
+      </div>
+      <div class="pn" id="p0"></div>
+      <div class="pn" id="p1" hidden>
+        <div class="bar"><span id="gs">النقاط: 0</span><span id="gt">الوقت: 20</span></div>
+        <div id="ga"><div class="res"><span>اضغطي على القلوب قبل ما تختفي!</span></div></div>
+        <div class="ctr"><button class="btn" id="gb">ابدئي اللعب</button></div>
+      </div>
+      <div class="pn" id="p2" hidden><div class="env" id="env"></div><div id="sm">اختاري ظرفًا لتفتحي رسالته 💌</div></div>
+    </div>
+  </section>
+
+  <section><h2>أغاني الحب</h2>
+    <div class="card">
+      <div class="pl"><div id="cov"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 21.5C5 16.5 2 12.6 2 8.8 2 6 4.2 4 6.8 4c1.9 0 3.6 1 5.2 3 1.6-2 3.3-3 5.2-3C19.8 4 22 6 22 8.8c0 3.8-3 7.7-10 12.7z"/></svg></div>
+        <div class="in"><div id="st"></div><div id="sa"></div>
+          <input type="range" id="pr" min="0" max="100" value="0" aria-label="شريط التقدم">
+          <div class="row"><span id="tc">0:00</span><span style="flex:1"></span><span id="td">0:00</span></div>
+          <div class="row"><button class="btn ghost" id="pv" aria-label="السابقة">⏮</button><button class="btn" id="pp">تشغيل ▶</button><button class="btn ghost" id="nx" aria-label="التالية">⏭</button>
+            <span aria-hidden="true">🔊</span><input type="range" id="vl" min="0" max="1" step="0.05" value="0.8" aria-label="مستوى الصوت" style="max-width:130px"></div>
+          <div id="sn"></div></div></div>
+      <div class="eq" id="eq" aria-hidden="true"></div>
+      <ol class="pls" id="pls"></ol>
+      <audio id="au" preload="none"></audio>
+    </div>
+  </section>
+
+  <section><h2>مدة حبنا</h2>
+    <div class="cnt" id="cnt"></div><p id="cn" style="text-align:center;margin-top:12px;color:#ffb4c8"></p>
+  </section>
+
+  <section><h2>المفاجأة الأخيرة</h2>
+    <div id="sp"><button class="btn" id="spb">افتحي المفاجأة</button>
+      <div id="spr" hidden><svg class="heart" viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff3d6e" d="M12 21.5C5 16.5 2 12.6 2 8.8 2 6 4.2 4 6.8 4c1.9 0 3.6 1 5.2 3 1.6-2 3.3-3 5.2-3C19.8 4 22 6 22 8.8c0 3.8-3 7.7-10 12.7z"/></svg><p id="spt"></p></div></div>
+  </section>
+  <footer><button class="btn ghost" id="top">العودة إلى الأعلى ↑</button></footer>
+</main>
+
+<script>
+/* ============================================================
+   ⚙️ إعدادات التخصيص — عدّلي القيم هنا فقط
+   أي قيمة تبقى بين [ ] تُعرض بنص بديل جميل (أو بدون الأقواس للأسماء)
+   ============================================================ */
+const CONFIG = {
+  herName: "[Salma]",                 // اسم الحبيبة (يظهر في قلب الكلمات)
+  hisName: "[Mahmoud]",               // اسمك
+  startDate: "[22/3/2025]",           // تاريخ بداية العلاقة (يوم/شهر/سنة أو yyyy-mm-dd)
+  introText: "فيه هدية صغيرة معمولة مخصوص علشانك ❤️",
+  message: "[الرسالة الرومانسية]",     // الرسالة الرومانسية
+  surprise: "[رسالة المفاجأة]",        // رسالة المفاجأة الأخيرة
+  extraWord: "[الف مسكن]",            // كلمة إضافية داخل القلب
+  heartWords: ["LOVE","AMOUR","AMOR","AMORE","LIEBE","أحبك","愛","사랑","爱","ЛЮБОВЬ","عشق","AŞK","AGAPE","TE AMO","ALOHA","प्यार"],
+  reasons: [    // قسم «ليه إنتِ مميزة؟»
+    {title:"ضحكتك", text:"بتنوّر أي يوم، وبتنسّيني أي تعب."},
+    {title:"قلبك الطيب", text:"بتحسسيني إن الدنيا لسه بخير."},
+    {title:"حنيتك", text:"كلمة واحدة منك بتهدّيني."},
+    {title:"قوتك", text:"بتقفي جنبي وبتفكريني إني قادر."},
+    {title:"بساطتك", text:"أبسط لحظة معاكِ بتبقى أحلى حاجة."},
+    {title:"إنك إنتِ", text:"بحبك زي ما إنتِ، من غير سبب. [الف مسكن] ليكِ."}
+  ],
+  confession: [ // أسئلة «كرسي الاعتراف»
+    "إيه أكتر حاجة في شخصيتي بتخليكي تضعفي قدامي؟",
+    "أول مرة حسيت إنك بتحبيني بجد كانت إمتى؟",
+    "عمرك غيرتي عليا من واحدة ومقولتيليش؟",
+    "إيه أكتر موقف عملته خلاكي تفكري فيا قبل ما تنامي؟",
+    "لو طلبت منك تقوليلي سر عمرك ما قولتيهولي، هيكون إيه؟",
+    "إيه أكتر حاجة بتكسفك لما أقولها لك؟",
+    "عمرك مثلتي إنك مش زعلانة مني وإنتِ من جواكي متضايقة جدًا؟",
+    "إيه أكتر تصرف مني بيخليكي تحسي إنك مش قادرة تزعلي مني؟",
+    "لو رجعنا لأول يوم اتكلمنا فيه، إيه الحاجة اللي كنتِ هتعمليها بشكل مختلف؟",
+    "إيه أكتر حاجة نفسك أعملها علشان تحسي إني فاهمك من غير ما تتكلمي؟",
+    "هل عمرك خفتي تخسريني؟ وإيه اللي خلاكي تحسي بكده؟",
+    "إيه أكتر رسالة مني قريتيها أكتر من مرة؟",
+    "لو كان لازم تختاري ذكرى واحدة بينا تعيشيها تاني، هتختاري إيه؟",
+    "إيه أكتر حاجة بتغيري عليا منها ومش بتحبي تعترفي بيها؟",
+    "هل في مرة كنتِ مستنية مني كلمة معينة وأنا مخدتش بالي؟",
+    "إيه أكتر حاجة رومانسية نفسك أعملها لك ومكسوفة تطلبيها؟",
+    "إيه أكتر عيب فيا بتتمني إني أغيره؟",
+    "لو زعلنا من بعض جامد، إيه التصرف اللي تتمني أعمله علشان أصالحك؟",
+    "إيه أكتر حاجة بتخليكي تحسي إنك مميزة عندي؟",
+    "هل في سؤال نفسك تسأليهولي من زمان بس مكسوفة؟",
+    "إيه أكتر حاجة بتخافي منها في مستقبل علاقتنا؟",
+    "لو اكتشفتي إني زعلان ومش عايز أتكلم، هتتصرفي معايا إزاي؟",
+    "إيه أكتر موقف حسيتِ فيه إني كنت سند ليكي؟",
+    "إيه الحاجة اللي لو بطلت أعملها هتزعلك حتى لو كانت بسيطة؟",
+    "لو هتوصفي علاقتنا بثلاث كلمات من غير تفكير، هتقولي إيه؟",
+    "إيه أكتر حاجة نفسك نحققها سوا بعد الجواز؟",
+    "هل في حاجة نفسك أفهمها عنك من غير ما تضطري تشرحيها كل مرة؟",
+    "إيه أكتر مرة حسيتِ فيها إنك وحشتيني حتى وإحنا لسه متكلمين؟",
+    "إيه التصرف اللي ممكن يخلي ثقتك فيا تزيد أكتر؟",
+    "لو عندك دقيقة واحدة تقوليلي فيها كل اللي في قلبك من غير كسوف، هتقولي إيه؟"
+  ],
+  turnQuestions: [ // أسئلة زر «دورك تسألني» (للطرف التاني)
+    "إيه أكتر حاجة بتحبها فيا ومش بتقولها؟",
+    "إيه أكتر حاجة بتخليك تتأكد إني بحبك؟",
+    "إيه أحلى حاجة فاكرها من أول أيامنا؟",
+    "إيه أكتر لحظة حسيت فيها إني سندك؟",
+    "إيه الحاجة اللي نفسك أعملها علشانك ومكسوف تطلبها؟",
+    "لو معاك دقيقة تقول فيها كل اللي في قلبك من غير كسوف، هتقول إيه؟"
+  ],
+  challenges: [ // قسم «اختار تحديك»
+    "قول 3 حاجات بتحبها في الطرف التاني.",
+    "احكي عن أجمل ذكرى بينكم.",
+    "ابعت رسالة رومانسية من قلبك.",
+    "اختار أغنية بتفكرك بالطرف التاني.",
+    "قول أمنية نفسك تحققوها سوا.",
+    "احكي عن موقف ضحكتوا فيه من قلبكم.",
+    "قول مجاملة صادقة عمرك ما قلتها قبل كده.",
+    "اختار سؤالًا من كرسي الاعتراف واسأله للطرف التاني."
+  ],
+  quiz: [       // q: السؤال، a: الإجابات، c: رقم الإجابة الأقرب (يبدأ من 0)
+    {q:"[أكتر حاجة بحبها فيكِ إيه؟]", a:["[ضحكتك]","[قلبك الطيب]","[عينيكِ]","[كل حاجة فيكِ]"], c:3},
+    {q:"[لو معانا يوم كامل، هنعمل إيه؟]", a:["[نسافر]","[نقعد سوا ونتكلم]","[نتفرج على فيلم]","[كله حلو طالما معاكِ]"], c:3},
+    {q:"[بحبك قد إيه؟]", a:["[كتير]","[أوي]","[قد السما]","[الف مسكن]"], c:3}
+  ],
+  heartsTime: 20,        // مدة لعبة القلوب بالثواني
+  heartsTarget: 12,      // النقاط المطلوبة للفوز
+  secrets: [
+    "إنتِ أجمل صدفة حصلت في حياتي 💖",
+    "كل يوم معاكِ بحس إني أسعد إنسان 🌹",
+    "ضحكتك بتصلّح أي يوم وحش ✨",
+    "[الف مسكن] لقلبك الطيب 🤍",
+    "إنتِ بيتي وأماني وكل حاجة حلوة 🏡",
+    "هفضل أختارك كل يوم، طول العمر 💍"
+  ],
+  songs: [      // src: ملف صوت تملكين حق استخدامه (مثل "music/1.mp3") أو رابط مباشر لملف صوت — ليس رابط يوتيوب/سبوتيفاي. اتركيه "" لو غير متوفر
+    {title:"تملي معاك", artist:"عمرو دياب", src:""},
+    {title:"أجمل عيون", artist:"عمرو دياب", src:""},
+    {title:"قمرين", artist:"عمرو دياب", src:""},
+    {title:"بحبك وحشتيني", artist:"حسين الجسمي", src:""},
+    {title:"3 دقات", artist:"أبو ويسرا", src:""},
+    {title:"حبيبي يا نور العين", artist:"عمرو دياب", src:""},
+    {title:"أكتر وأكتر", artist:"عمرو دياب", src:""},
+    {title:"يا أنا يا لأ", artist:"عمرو دياب", src:""},
+    {title:"Perfect", artist:"Ed Sheeran", src:""},
+    {title:"All of Me", artist:"John Legend", src:""}
+  ]
+};
+/* ===================== نهاية الإعدادات ===================== */
+
+const $=s=>document.querySelector(s), C=CONFIG;
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isP=v=>typeof v==='string'&&/^\[.*\]$/.test(v.trim());
+const strip=v=>String(v).trim().replace(/^\[|\]$/g,'');
+const val=(v,fb)=>isP(v)?(fb!==undefined?fb:strip(v)):v;
+const her=val(C.herName), his=val(C.hisName);
+document.title='هدية إلى '+her;
+$('#introTxt').textContent=C.introText;
+$('#title').textContent='إلى '+her;
+$('#sub').textContent='من '+his+' ❤️';
+$('#nm').textContent=her;
+
+/* ---------- الخلفية: نجوم وقلوب عائمة ---------- */
+(function(){
+  const c=$('#bg'),x=c.getContext('2d');let W,H,P=[];
+  function rs(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*d;c.height=H*d;x.setTransform(d,0,0,d,0,0);
+    P=[];for(let i=0;i<70;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,t:Math.random()*6,h:0});
+    for(let i=0;i<14;i++)P.push({x:Math.random()*W,y:Math.random()*H,r:10+Math.random()*16,t:Math.random()*6,h:1,v:.2+Math.random()*.4});}
+  let last=0;
+  function draw(ms){
+    if(ms-last>32||reduced){last=ms;x.clearRect(0,0,W,H);
+      for(const p of P){
+        if(p.h){if(!reduced){p.y-=p.v;p.x+=Math.sin(ms/1500+p.t)*.3;if(p.y<-30){p.y=H+30;p.x=Math.random()*W}}
+          x.globalAlpha=.22;x.fillStyle='#ff4d8d';x.font=p.r+'px sans-serif';x.fillText('♥',p.x,p.y);}
+        else{x.globalAlpha=.35+.65*Math.abs(Math.sin(ms/900+p.t));x.fillStyle='#fff';x.beginPath();x.arc(p.x,p.y,p.r,0,6.3);x.fill();}}}
+    if(!reduced)requestAnimationFrame(draw);}
+  rs();addEventListener('resize',rs);requestAnimationFrame(draw);
+})();
+
+/* ---------- القلب المصنوع من لغات العالم ---------- */
+const HW={cv:$('#hc'),items:[],playing:!reduced,speeds:[.6,1.2,2.4],names:['بطيئة','متوسطة','سريعة'],si:1,vis:true,last:0};
+function layoutHeart(){
+  const cv=HW.cv,ctx=cv.getContext('2d'),W=Math.min($('#hw').clientWidth||320,540),d=Math.min(devicePixelRatio||1,2);
+  if(!W)return;
+  const H=Math.round(W*.98),s=W/2.5,fs=Math.max(10,Math.round(W/27)),rh=fs*1.45;
+  cv.width=W*d;cv.height=H*d;cv.style.height=H+'px';ctx.setTransform(d,0,0,d,0,0);
+  ctx.font='700 '+fs+'px Cairo,Tahoma,sans-serif';ctx.textBaseline='middle';
+  const words=C.heartWords.concat([C.extraWord]).map(strip),cols=['#ff4d8d','#ff2d55','#f5c76b','#ffd6e5','#ff7aa8'];
+  const f=(x,y)=>Math.pow(x*x+y*y-1,3)-x*x*y*y*y;
+  const nw=W*.27,nh=W*.075,ncy=H*.46;let k=0;HW.items=[];
+  for(let py=rh*.8;py<H-rh*.4;py+=rh){
+    const y=(H/2-py)/s+.12,segs=[];let a=null;
+    for(let x=-1.4;x<=1.4;x+=.012){const inn=f(x,y)<=0;if(inn&&a===null)a=x;if(!inn&&a!==null){segs.push([a,x]);a=null}}
+    for(const [x1,x2] of segs){
+      const X1=W/2+x1*s,sw=(x2-x1)*s-fs*.6;if(sw<fs*2)continue;
+      const row=[];let tot=0,guard=0;
+      while(guard++<40){const t=words[k%words.length],w=ctx.measureText(t).width;
+        if(tot+w+(row.length?fs*.7:0)>sw){if(row.length)break;k++;continue}
+        tot+=w+(row.length?fs*.7:0);row.push({t,w});k++;}
+      let x=X1+fs*.3+(sw-tot)/2;
+      for(const r of row){
+        const cx=x+r.w/2;
+        if(!(Math.abs(cx-W/2)<nw+r.w/2&&Math.abs(py-ncy)<nh)){
+          HW.items.push({t:r.t,x,y:py,ph:((x+r.w/2)/W*.6+py/H*.4),c:cols[HW.items.length%cols.length],j:Math.random()*9});}
+        x+=r.w+fs*.7;}
+    }}
+  HW.W=W;HW.H=H;paintHeart(performance.now());
+}
+function paintHeart(ms){
+  const ctx=HW.cv.getContext('2d'),t=ms/1000*HW.speeds[HW.si];
+  ctx.clearRect(0,0,HW.W,HW.H);
+  for(const it of HW.items){
+    let d=((it.ph-t*.3)%1+1)%1,b=d<.2?1-d/.2:0;
+    d=((it.ph-t*.3+.5)%1+1)%1;b=Math.max(b,d<.12?(1-d/.12)*.8:0);
+    if(Math.sin(t*2.6+it.j*7)>.95)b=Math.max(b,.9);
+    ctx.globalAlpha=.32+.68*b;ctx.fillStyle=b>.7?'#fff':it.c;
+    if(b>.25){ctx.shadowColor=it.c;ctx.shadowBlur=16*b}else ctx.shadowBlur=0;
+    ctx.fillText(it.t,it.x,it.y);}
+  ctx.shadowBlur=0;ctx.globalAlpha=1;
+}
+function loopHeart(ms){
+  if(HW.playing&&HW.vis&&ms-HW.last>33){HW.last=ms;paintHeart(ms)}
+  requestAnimationFrame(loopHeart);
+}
+new IntersectionObserver(e=>HW.vis=e[0].isIntersecting).observe($('#hw'));
+$('#spd').onclick=()=>{HW.si=(HW.si+1)%3;$('#spd').textContent='السرعة: '+HW.names[HW.si];if(!HW.playing)paintHeart(performance.now())};
+$('#stp').onclick=()=>{HW.playing=!HW.playing;$('#stp').textContent=HW.playing?'إيقاف الحركة':'تشغيل الحركة';$('#hw').classList.toggle('paused',!HW.playing)};
+if(reduced){$('#stp').textContent='تشغيل الحركة';$('#hw').classList.add('paused')}
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(!$('#main').hidden)layoutHeart()},150)});
+requestAnimationFrame(loopHeart);
+
+/* ---------- الرسالة (Typewriter) ---------- */
+const MSG=val(C.message,'يا '+her+'،\nإنتِ أجمل حاجة حصلت في حياتي. بكِ بقت الأيام أهدى والدنيا أحلى، وكل لحظة معاكِ بتفكرني إني محظوظ.\nمهما قلت مش هوصف قد إيه بحبك، بس وعد مني: هفضل جنبك في كل خطوة.\n— '+his+' ❤️');
+let tw;
+function typeMsg(){clearInterval(tw);const el=$('#msg');el.textContent='';el.classList.add('typing');let i=0;
+  tw=setInterval(()=>{el.textContent=MSG.slice(0,++i);if(i>=MSG.length){clearInterval(tw);el.classList.remove('typing')}},reduced?1:45)}
+$('#full').onclick=()=>{clearInterval(tw);$('#msg').textContent=MSG;$('#msg').classList.remove('typing')};
+$('#again').onclick=typeMsg;
+new IntersectionObserver((e,o)=>{if(e[0].isIntersecting){typeMsg();o.disconnect()}},{threshold:.4}).observe($('#msg'));
+
+/* ---------- ليه إنتِ مميزة؟ ---------- */
+const HP='M12 21.5C5 16.5 2 12.6 2 8.8 2 6 4.2 4 6.8 4c1.9 0 3.6 1 5.2 3 1.6-2 3.3-3 5.2-3C19.8 4 22 6 22 8.8c0 3.8-3 7.7-10 12.7z';
+C.reasons.forEach(r=>{const e=document.createElement('article');e.className='card';
+  e.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#ff3d6e" d="'+HP+'"/></svg><h3></h3><p></p>';
+  e.querySelector('h3').textContent=val(r.title);e.querySelector('p').textContent=val(r.text);$('#rs').append(e)});
+
+/* ---------- كرسي الاعتراف (لا يُحفظ أو يُرسل أي شيء؛ المفضلة للجلسة فقط) ---------- */
+const CQ=C.confession,seen=new Set(),favs=new Set();let ci=-1;
+const unseen=()=>CQ.map((_,i)=>i).filter(i=>!seen.has(i));
+function cfUp(){$('#cc').textContent='اتشافوا '+seen.size+' من '+CQ.length+' سؤال';$('#cfb').textContent=favs.has(ci)?'⭐ في المفضلة':'☆ أضيفه للمفضلة'}
+function swap(){const c=$('#cq');c.classList.remove('sw');void c.offsetWidth;c.classList.add('sw')}
+function showQ(i){ci=i;seen.add(i);swap();$('#cq').textContent=CQ[i];$('#cfn').textContent='';cfUp()}
+function endQ(){ci=-1;swap();$('#cq').innerHTML='<div>خلصنا كل الأسئلة 💞<br>شكرًا إنكم كنتم صريحين ومرتاحين مع بعض، وده أجمل اعتراف.</div>';
+  const b=document.createElement('button');b.className='btn';b.textContent='ابدأوا من الأول';b.onclick=()=>{seen.clear();ci=-1;$('#cq').textContent='اضغطي «السؤال التالي» وابدأي ❤️';cfUp()};$('#cq').append(b);cfUp()}
+function nextQ(){const u=unseen();if(!u.length)return endQ();const a=u.find(i=>i>ci);showQ(a!==undefined?a:u[0])}
+function randQ(){const u=unseen();if(!u.length)return endQ();showQ(u[Math.random()*u.length|0])}
+function favList(){const l=$('#fl');l.innerHTML='';favs.forEach(i=>{const li=document.createElement('li'),q=document.createElement('button'),x=document.createElement('button');
+  q.className='q';q.textContent=CQ[i];q.onclick=()=>showQ(i);x.className='x';x.textContent='✕';x.setAttribute('aria-label','حذف من المفضلة');x.onclick=()=>{favs.delete(i);favList();cfUp()};li.append(q,x);l.append(li)});$('#fav').hidden=!favs.size}
+$('#cfx').onclick=nextQ;$('#cfs').onclick=nextQ;$('#cfr').onclick=randQ;
+$('#cfa').onclick=()=>{if(ci>=0)$('#cfn').textContent='ماشي، قولها من قلبك… إجابتك بينكم بس، ومش بتتسجل ولا بتتبعت لأي مكان 🔒'};
+$('#cfb').onclick=()=>{if(ci<0)return;favs.has(ci)?favs.delete(ci):favs.add(ci);favList();cfUp()};
+$('#cft').onclick=()=>$('#tq').textContent='💬 دورك تسألني: '+C.turnQuestions[Math.random()*C.turnQuestions.length|0];
+cfUp();
+
+/* ---------- اختار تحديك ---------- */
+let lc=-1;
+function pickC(){const n=C.challenges.length;let i;do{i=Math.random()*n|0}while(n>1&&i==lc);lc=i;const c=$('#chq');c.classList.remove('sw');void c.offsetWidth;c.classList.add('sw');c.textContent=C.challenges[i]}
+$('#chb').onclick=pickC;$('#chs').onclick=pickC;
+
+/* ---------- الألعاب ---------- */
+document.querySelectorAll('.tabs .btn').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs .btn').forEach(x=>x.setAttribute('aria-selected',x===b));
+  document.querySelectorAll('.pn').forEach((p,i)=>p.hidden=i!=b.dataset.t)});
+/* 1) اختبار الحب */
+let qi=0,qs=0;
+function quiz(){
+  const p=$('#p0'),q=C.quiz[qi];
+  if(!q){const r=qs/C.quiz.length,m=r==1?'إنتِ فعلًا عارفاني أكتر من نفسي! ❤️':r>.5?'قريبة جدًا من قلبي 💕':'مفيش مشكلة، هفضل أحكيلك كل حاجة 🌹';
+    p.innerHTML=`<h3 class="disp" style="font-size:1.8rem;text-align:center">${qs} من ${C.quiz.length}</h3><p style="text-align:center;margin:10px 0">${m}</p><div class="ctr"><button class="btn" id="qr">أعيدي الاختبار</button></div>`;
+    $('#qr').onclick=()=>{qi=0;qs=0;quiz()};return}
+  p.innerHTML='<h3 style="margin-bottom:8px"></h3>';p.firstChild.textContent=(qi+1)+'/'+C.quiz.length+'  '+val(q.q);
+  q.a.forEach((a,i)=>{const b=document.createElement('button');b.className='opt';b.textContent=val(a);
+    b.onclick=()=>{p.querySelectorAll('.opt').forEach((o,j)=>{o.disabled=true;if(j==q.c)o.classList.add('ok')});
+      if(i==q.c)qs++;else b.classList.add('no');setTimeout(()=>{qi++;quiz()},900)};p.append(b)});}
+quiz();
+/* 2) اجمعي القلوب */
+let sc=0,tl=0,gi,si;
+const ga=$('#ga'),upd=()=>{$('#gs').textContent='النقاط: '+sc;$('#gt').textContent='الوقت: '+tl};
+function endG(){clearInterval(gi);clearInterval(si);const w=sc>=C.heartsTarget;
+  ga.innerHTML=`<div class="res"><div><b style="font-size:2rem">${sc} ❤</b><p>${w?'مبروك! جمعتِ قلوب كتير، بس قلبي كله ليكِ أصلًا 💖':'حلوة! جربي تاني، وقلبي كله ليكِ في كل الحالات 💕'}</p></div></div>`;$('#gb').textContent='العبي مرة أخرى'}
+function spawn(){const b=document.createElement('button');b.className='fh';b.textContent='❤';b.setAttribute('aria-label','قلب');
+  b.style.fontSize=(26+Math.random()*20)+'px';b.style.left=Math.random()*Math.max(10,ga.clientWidth-50)+'px';b.style.top=Math.random()*Math.max(10,ga.clientHeight-50)+'px';
+  b.onpointerdown=e=>{e.preventDefault();sc++;upd();b.remove()};ga.append(b);setTimeout(()=>b.remove(),1700)}
+$('#gb').onclick=()=>{clearInterval(gi);clearInterval(si);sc=0;tl=C.heartsTime;upd();ga.innerHTML='';si=setInterval(spawn,620);gi=setInterval(()=>{tl--;upd();if(tl<=0)endG()},1000)};
+/* 3) الرسائل السرية */
+C.secrets.forEach(s=>{const b=document.createElement('button');b.textContent='✉️';b.setAttribute('aria-label','ظرف مغلق');
+  b.onclick=()=>{b.textContent='💌';b.classList.add('open');$('#sm').textContent=strip(s)};$('#env').append(b)});
+
+/* ---------- مشغل الأغاني ---------- */
+const au=$('#au'),S=C.songs;let sx=0;
+const ok=s=>s&&!isP(s),fmt=t=>isFinite(t)?Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0'):'0:00';
+const note=m=>$('#sn').textContent=m||'';
+function loadS(i){
+  sx=(i+S.length)%S.length;const s=S[sx];
+  $('#st').textContent=val(s.title,'أغنيتنا');$('#sa').textContent=val(s.artist,'أضيفي اسم الفنان');
+  document.querySelectorAll('#pls li').forEach((l,i)=>l.classList.toggle('on',i==sx));
+  $('#pr').value=0;$('#tc').textContent='0:00';$('#td').textContent='0:00';$('#pp').textContent='تشغيل ▶';
+  if(ok(s.src)){au.src=s.src;note('')}else{au.removeAttribute('src');au.load();note('لا يوجد ملف صوت: أضيفي مسار ملف mp3 محلي أو رابطًا مباشرًا في CONFIG.songs')}
+}
+async function playS(){if(!ok(S[sx].src)){note('أضيفي مصدر صوت صالحًا في CONFIG.songs ثم أعيدي المحاولة');return}
+  try{await au.play()}catch(e){note('تعذر تشغيل الملف. تأكدي أن الرابط مباشر لملف صوت صالح.')}}
+$('#pp').onclick=()=>au.paused?playS():au.pause();
+$('#pv').onclick=()=>loadS(sx-1);$('#nx').onclick=()=>loadS(sx+1);
+$('#vl').oninput=e=>au.volume=e.target.value;au.volume=.8;
+$('#pr').oninput=e=>{if(au.duration)au.currentTime=au.duration*e.target.value/100};
+const viz=on=>{$('#eq').classList.toggle('on',on);$('#cov').classList.toggle('on',on)};
+au.onplay=()=>{$('#pp').textContent='إيقاف ⏸';viz(true)};au.onpause=()=>{$('#pp').textContent='تشغيل ▶';viz(false)};
+au.ontimeupdate=()=>{$('#tc').textContent=fmt(au.currentTime);if(au.duration)$('#pr').value=au.currentTime/au.duration*100};
+au.onloadedmetadata=()=>$('#td').textContent=fmt(au.duration);
+au.onended=()=>S.length>1?(loadS(sx+1),playS()):au.pause();
+au.onerror=()=>{if(au.getAttribute('src'))note('تعذر تحميل ملف الصوت. تأكدي من صحة المسار أو الرابط.')};
+const eq=$('#eq');for(let i=0;i<30;i++){const b=document.createElement('span');b.style.animationDuration=(.5+Math.random()*.9)+'s';b.style.animationDelay=(-Math.random())+'s';eq.append(b)}
+S.forEach((s,i)=>{const li=document.createElement('li'),b=document.createElement('button');b.textContent=(i+1)+'. '+val(s.title)+' — '+val(s.artist);
+  b.onclick=()=>{loadS(i);if(ok(s.src))playS()};li.append(b);$('#pls').append(li)});
+loadS(0);
+
+/* ---------- عداد الحب ---------- */
+function parseD(v){const s=strip(v);let m=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{4})$/),d;
+  if(m)d=new Date(+m[3],+m[2]-1,+m[1]);else if(m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/))d=new Date(+m[1],+m[2]-1,+m[3]);
+  return d&&!isNaN(d)?d:null}
+const SD=parseD(C.startDate),cnt=$('#cnt');
+['أيام','ساعات','دقائق','ثواني'].forEach(l=>{const e=document.createElement('div');e.className='card';e.innerHTML='<b>--</b>'+l;cnt.append(e)});
+function tick(){
+  if(!SD||SD>new Date()){$('#cn').textContent=SD?'تاريخ البداية في المستقبل — راجعي CONFIG.startDate':'حدّدي تاريخ البداية في CONFIG.startDate (يوم/شهر/سنة)';return}
+  let t=Math.floor((Date.now()-SD)/1000);const v=[Math.floor(t/86400),Math.floor(t%86400/3600),Math.floor(t%3600/60),t%60];
+  cnt.querySelectorAll('b').forEach((b,i)=>b.textContent=v[i].toLocaleString('ar-EG'));
+  $('#cn').textContent='منذ '+strip(C.startDate)+' وكل يوم أحبك أكتر';}
+tick();setInterval(tick,1000);
+
+/* ---------- المفاجأة ---------- */
+$('#spb').onclick=()=>{
+  $('#spt').textContent=val(C.surprise,'كل يوم معاكِ هو أجمل مفاجأة في حياتي، يا '+her+'. بحبك ❤️');
+  $('#spr').hidden=false;$('#spb').hidden=true;
+  if(!reduced)for(let i=0;i<28;i++){const f=document.createElement('span');f.className='fl';f.textContent=['❤','💖','✨','💕'][i%4];
+    f.style.left=Math.random()*95+'vw';f.style.fontSize=(18+Math.random()*26)+'px';f.style.animationDelay=Math.random()*1.2+'s';f.style.color='#ff4d8d';
+    document.body.append(f);setTimeout(()=>f.remove(),4800)}
+  $('#spr').scrollIntoView({block:'center'})};
+$('#top').onclick=()=>scrollTo({top:0,behavior:reduced?'auto':'smooth'});
+
+/* ---------- شاشة البداية ---------- */
+$('#openBtn').onclick=()=>{
+  $('#intro').classList.add('out');setTimeout(()=>$('#intro').hidden=true,950);
+  const m=$('#main');m.hidden=false;m.classList.add('show');
+  (document.fonts?document.fonts.ready:Promise.resolve()).then(layoutHeart);layoutHeart();
+  if(ok(S[0].src))playS(); // الموسيقى تبدأ فقط بعد تفاعل المستخدم
+};
+</script>
+</body>
+</html>
